@@ -46,7 +46,7 @@ module.exports = {
 
 if (ENV === 'dev') {
     module.exports.devtool = 'source-map';
-    module.exports.output.path = path.join(__dirname, 'demo');
+    module.exports.output.path = path.join(__dirname, 'docs');
 } else {
     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: true

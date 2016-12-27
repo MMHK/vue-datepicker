@@ -11,6 +11,18 @@ calendar and datepicker component with material design for Vue.js (MM 修改版)
 
 **此项目依赖 `moment` dist已经将所有的外部依赖移除，使用时请自行引入 `moment`。**
 
+## 开发打包脚本
+
+开发:
+```
+npm run dev
+```
+
+打包:
+```
+npm run dist
+```
+
 # Demo
 
 The demo page is [HERE](http://hilongjw.github.io/vue-datepicker/demo.html).
