@@ -25,7 +25,7 @@ npm run dist
 
 # Demo
 
-The demo page is [HERE](http://hilongjw.github.io/vue-datepicker/demo.html).
+Demo示例地址 [HERE](https://mmhk.github.io/vue-datepicker/).
 
 ![Screenshot](screenshot.png)
 
