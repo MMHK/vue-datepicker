@@ -1,5 +1,15 @@
 # vue-datepicker
-calendar and datepicker component with material design for Vue.js
+calendar and datepicker component with material design for Vue.js (MM 修改版)
+
+## 修改项目
+
+- 增加webpack 打包支持
+- 去掉一些字体样式
+- 增加demo示例
+
+## 注意
+
+**此项目依赖 `moment` dist已经将所有的外部依赖移除，使用时请自行引入 `moment`。**
 
 # Demo
 

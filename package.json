@@ -5,7 +5,7 @@
   "main": "vue-datepicker.vue",
   "scripts": {
     "test": "webpack-dev-server --inline --hot --host 0.0.0.0 --env dev --config webpack.config.js",
-    "dev": "webpack --config webpack.config.js --env dev",
+    "dev": "webpack --config webpack.config.js --env dev --watch",
     "dist": "webpack --env dist"
   },
   "repository": {
