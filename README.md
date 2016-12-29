@@ -6,6 +6,7 @@ calendar and datepicker component with material design for Vue.js (MM 修改版)
 - 增加webpack 打包支持
 - 去掉一些字体样式
 - 增加demo示例
+- 增加 `option.hiddenInput` 配置，用于隐藏 input。方便其他UI组件调用。
 
 ## 注意
 

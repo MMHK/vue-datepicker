@@ -356,7 +356,7 @@
 </style>
 <template>
   <div class="cov-vue-date">
-    <div class="datepickbox">
+    <div v-if="!option.hiddenInput" class="datepickbox">
       <input type="text" title="input date" class="cov-datepicker" readonly="readonly" :placeholder="option.placeholder" v-model="time"
         :required="required" @click="showCheck" @foucus="showCheck" :style="option.inputStyle" />
     </div>
@@ -429,6 +429,7 @@
         type: Object,
         default () {
           return {
+            hiddenInput: false,
             type: 'day',
             SundayFirst: false,
             week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],

@@ -25,17 +25,20 @@
 
 <body>
     <main id="App">
-        <date-picker :time.sync="starttime" :option="option" :limit="limit"></date-picker>
+        <date-picker v-ref:picker :time.sync="starttime" :option="option" :limit="limit"></date-picker>
+        <button type="button" @click="$refs.picker.showCheck">Open Picker</button>
     </main>
     <script>
         (function () {
             var vm = new Vue({
                 el: "#App",
+
                 data: function () {
                     return {
                         starttime: moment().format('YYYY-MM-DD'),
 
                         option: {
+                            hiddenInput: true,
                             type: 'day',
                             week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
                             month: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
