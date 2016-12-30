@@ -303,7 +303,7 @@
     background: #fff;
     vertical-align: top;
     text-align: right;
-    padding: 0.5em 1em;
+    padding: 1em;
   }
   
   .button-box span {
