@@ -2,7 +2,7 @@
   .datepicker-overlay {
     position: fixed;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     z-index: 998;
     top: 0;
     left: 0;
@@ -74,7 +74,7 @@
     position: relative;
     position: fixed;
     display: block;
-    width: 400px;
+    width: 24em;
     max-width: 100%;
     z-index: 999;
     top: 50%;
@@ -83,21 +83,26 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    -webkit-overflow-scrolling: touch;
   }
   
   .cov-picker-box {
     background: #fff;
     width: 100%;
     display: inline-block;
-    padding: 25px;
+    padding: 1em;
     box-sizing: border-box !important;
     -moz-box-sizing: border-box !important;
     -webkit-box-sizing: border-box !important;
     -ms-box-sizing: border-box !important;
-    width: 400px;
     max-width: 100%;
-    height: 280px;
     text-align: start!important;
+    line-height: 1em;
+    max-height: 20em;
+  }
+  
+  .cov-picker-box.list-box {
+    overflow-y: scroll;
   }
   
   .cov-picker-box td {
@@ -126,16 +131,14 @@
     display: inline-block;
     text-align: center;
     cursor: pointer;
-    height: 34px;
-    padding: 0;
-    line-height: 34px;
+    line-height: 1em;
     color: #000;
     background: #fff;
     vertical-align: middle;
+    padding: 0.5em;
   }
   
   .week ul {
-    margin: 0 0 8px;
     padding: 0;
     list-style: none;
   }
@@ -146,7 +149,9 @@
     text-align: center;
     background: transparent;
     color: #000;
+    line-height: 1;
     font-weight: bold;
+    padding: 0.5em;
   }
   
   .passive-day {
@@ -165,7 +170,14 @@
   }
   
   .cov-date-monthly {
-    height: 150px;
+    padding: 0;
+  }
+  
+  .cov-date-monthly:before,
+  .cov-date-monthly:after {
+    content: " ";
+    display: table;
+    clear: both;
   }
   
   .cov-date-monthly>div {
@@ -174,7 +186,6 @@
     margin: 0;
     vertical-align: middle;
     color: #fff;
-    height: 150px;
     float: left;
     text-align: center;
     cursor: pointer;
@@ -187,13 +198,15 @@
     text-indent: -300px;
     overflow: hidden;
     color: #fff;
+    height: 5em;
   }
   
   .cov-date-caption {
     width: 60%;
-    padding: 50px 0!important;
+    padding: 0.5em 0!important;
     box-sizing: border-box;
-    font-size: 24px;
+    font-size: 1.5em;
+    line-height: 1;
   }
   
   .cov-date-caption span:hover {
@@ -267,8 +280,7 @@
   
   .date-item {
     text-align: center;
-    font-size: 20px;
-    padding: 10px 0;
+    padding: 0.5em 0;
     cursor: pointer;
   }
   
@@ -290,15 +302,13 @@
   .button-box {
     background: #fff;
     vertical-align: top;
-    height: 50px;
-    line-height: 50px;
     text-align: right;
-    padding-right: 20px;
+    padding: 0.5em 1em;
   }
   
   .button-box span {
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 0 1em;
   }
   
   .watch-box {
@@ -311,7 +321,7 @@
     display: inline-block;
     width: 50%;
     text-align: center;
-    height: 100%;
+    max-height: 20em;
     overflow: auto;
     float: left;
   }
@@ -325,8 +335,8 @@
   
   .hour-item,
   .min-item {
-    padding: 10px;
-    font-size: 36px;
+    padding: 0.5em;
+    font-size: 1.5em;
     cursor: pointer;
   }
   
@@ -356,15 +366,15 @@
 </style>
 <template>
   <div class="cov-vue-date">
-    <div v-if="!option.hiddenInput" class="datepickbox">
-      <input type="text" title="input date" class="cov-datepicker" readonly="readonly" :placeholder="option.placeholder" v-model="time"
-        :required="required" @click="showCheck" @foucus="showCheck" :style="option.inputStyle" />
+    <div v-if="!innerOption.hiddenInput" class="datepickbox">
+      <input type="text" title="input date" class="cov-datepicker" readonly="readonly" :placeholder="innerOption.placeholder" v-model="time"
+        :required="required" @click="showCheck" @foucus="showCheck" :style="innerOption.inputStyle" />
     </div>
-    <div class="datepicker-overlay" v-if="showInfo.check" @click="dismiss($event)" v-bind:style="{'background' : option.overlayOpacity? 'rgba(0,0,0,'+option.overlayOpacity+')' : 'rgba(0,0,0,0.5)'}">
-      <div class="cov-date-body" :style="{'background-color': option.color ? option.color.header : '#3f51b5'}">
+    <div class="datepicker-overlay" v-if="showInfo.check" @click="dismiss($event)" v-bind:style="{'background' : innerOption.overlayOpacity? 'rgba(0,0,0,'+innerOption.overlayOpacity+')' : 'rgba(0,0,0,0.5)'}">
+      <div class="cov-date-body" :style="{'background-color': innerOption.color ? innerOption.color.header : '#3f51b5'}">
         <div class="cov-date-monthly">
           <div class="cov-date-previous" @click="nextMonth('pre')">«</div>
-          <div class="cov-date-caption" :style="{'color': option.color ? option.color.headerText : '#fff'}">
+          <div class="cov-date-caption" :style="{'color': innerOption.color ? innerOption.color.headerText : '#fff'}">
             <span @click="showYear"><small>{{checked.year}}</small></span>
             <br>
             <span @click="showMonth">{{displayInfo.month}}</span>
@@ -375,11 +385,11 @@
           <div class="cov-picker-box">
             <div class="week">
               <ul>
-                <li v-for="weekie in library.week">{{weekie}}</li>
+                <li v-for="weekie in innerWeek">{{weekie}}</li>
               </ul>
             </div>
             <div class="day" v-for="day in dayList" track-by="$index" @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}"
-              :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
+              :style="day.checked ? (innerOption.color && innerOption.color.checkedDay ? { background: innerOption.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
           </div>
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.year">
@@ -389,7 +399,7 @@
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.month">
           <div class="cov-picker-box date-list">
-            <div class="date-item" v-for="monthItem in library.month" track-by="$index" @click="setMonth(monthItem)">{{monthItem}}</div>
+            <div class="date-item" v-for="monthItem in innerMonth" track-by="$index" @click="setMonth(monthItem)">{{monthItem}}</div>
           </div>
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.hour">
@@ -409,8 +419,8 @@
           </div>
         </div>
         <div class="button-box">
-          <span @click="showInfo.check=false">{{option.buttons? option.buttons.cancel : 'Cancel' }}</span>
-          <span @click="picked">{{option.buttons? option.buttons.ok : 'Ok'}}</span>
+          <span @click="showInfo.check=false">{{innerOption.buttons? innerOption.buttons.cancel : 'Cancel' }}</span>
+          <span @click="picked">{{innerOption.buttons? innerOption.buttons.ok : 'Ok'}}</span>
         </div>
       </div>
     </div>
@@ -426,41 +436,7 @@
         required: true
       },
       option: {
-        type: Object,
-        default () {
-          return {
-            hiddenInput: false,
-            type: 'day',
-            SundayFirst: false,
-            week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-            month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December'
-            ],
-            format: 'YYYY-MM-DD',
-            color: {
-              checked: '#F50057',
-              header: '#3f51b5',
-              headerText: '#fff'
-            },
-            inputStyle: {
-              'display': 'inline-block',
-              'padding': '6px',
-              'line-height': '22px',
-              'font-size': '16px',
-              'border': '2px solid #fff',
-              'box-shadow': '0 1px 3px 0 rgba(0, 0, 0, 0.2)',
-              'border-radius': '2px',
-              'color': '#5F5F5F'
-            },
-            placeholder: 'when?',
-            buttons: {
-              ok: 'OK',
-              cancel: 'Cancel'
-            },
-            overlayOpacity: 0.5,
-            dismissible: true
-          }
-        }
+        type: Object
       },
       limit: {
         type: Array,
@@ -469,6 +445,55 @@
         }
       }
     },
+
+    ready() {},
+
+    computed: {
+      innerWeek() {
+        return this.innerOption.week;
+      },
+
+      innerMonth() {
+        return this.innerOption.month;
+      },
+
+      innerOption() {
+        return Object.assign({
+          hiddenInput: false,
+          type: 'day',
+          SundayFirst: false,
+          week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+          month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+            'October',
+            'November', 'December'
+          ],
+          format: 'YYYY-MM-DD',
+          color: {
+            checked: '#F50057',
+            header: '#3f51b5',
+            headerText: '#fff'
+          },
+          inputStyle: {
+            'display': 'inline-block',
+            'padding': '6px',
+            'line-height': '22px',
+            'font-size': '16px',
+            'border': '2px solid #fff',
+            'box-shadow': '0 1px 3px 0 rgba(0, 0, 0, 0.2)',
+            'border-radius': '2px',
+            'color': '#5F5F5F'
+          },
+          placeholder: 'when?',
+          buttons: {
+            ok: 'OK',
+            cancel: 'Cancel'
+          },
+          overlayOpacity: 0.5,
+          dismissible: true
+        }, this.option)
+      }
+    },
+
     data() {
       function hours() {
         let list = []
@@ -483,6 +508,8 @@
         return list
       }
 
+
+
       function mins() {
         let list = []
         let min = 60
@@ -493,6 +520,9 @@
             value: min < 10 ? '0' + min : min
           })
         }
+
+        this;
+
         return list
       }
       return {
@@ -509,8 +539,6 @@
           month: ''
         },
         library: {
-          week: this.option.week,
-          month: this.option.month,
           year: []
         },
         checked: {
@@ -541,13 +569,13 @@
         if (time === undefined || !Date.parse(time)) {
           this.checked.currentMoment = moment()
         } else {
-          this.checked.currentMoment = moment(time, this.option.format)
+          this.checked.currentMoment = moment(time, this.innerOption.format)
         }
         this.showOne('day')
         this.checked.year = moment(this.checked.currentMoment).format('YYYY')
         this.checked.month = moment(this.checked.currentMoment).format('MM')
         this.checked.day = moment(this.checked.currentMoment).format('DD')
-        this.displayInfo.month = this.library.month[moment(this.checked.currentMoment).month()]
+        this.displayInfo.month = this.innerMonth[moment(this.checked.currentMoment).month()]
         let days = []
         let currentMoment = this.checked.currentMoment
         let firstDay = moment(currentMoment).date(1).day()
@@ -567,15 +595,15 @@
             checked: false,
             moment: moment(currentMoment).date(i)
           })
-          if (i === Math.ceil(moment(currentMoment).format('D')) && moment(oldtime, this.option.format).year() ===
-            moment(currentMoment).year() && moment(oldtime, this.option.format).month() === moment(currentMoment).month()
+          if (i === Math.ceil(moment(currentMoment).format('D')) && moment(oldtime, this.innerOption.format).year() ===
+            moment(currentMoment).year() && moment(oldtime, this.innerOption.format).month() === moment(currentMoment).month()
           ) {
             days[i - 1].checked = true
           }
           this.checkBySelectDays(i, days)
         }
         if (firstDay === 0) firstDay = 7
-        for (let i = 0; i < firstDay - (this.option.SundayFirst ? 0 : 1); i++) {
+        for (let i = 0; i < firstDay - (this.innerOption.SundayFirst ? 0 : 1); i++) {
           let passiveDay = {
             value: previousMonth.daysInMonth() - (i),
             inMonth: false,
@@ -655,7 +683,7 @@
         if (!(obj.inMonth)) {
           this.nextMonth(obj.action)
         }
-        if (this.option.type === 'day' || this.option.type === 'min') {
+        if (this.innerOption.type === 'day' || this.innerOption.type === 'min') {
           this.dayList.forEach((x) => {
             x.checked = false
           })
@@ -672,7 +700,7 @@
             obj.checked = true
           }
         }
-        switch (this.option.type) {
+        switch (this.innerOption.type) {
           case 'day':
             this.picked()
             break
@@ -749,7 +777,7 @@
         this.showDay(this.checked.currentMoment)
       },
       setMonth(month) {
-        let mo = (this.library.month.indexOf(month) + 1)
+        let mo = (this.innerMonth.indexOf(month) + 1)
         if (mo < 10) {
           mo = '0' + '' + mo
         }
@@ -760,7 +788,7 @@
         if (this.time === '') {
           this.showDay()
         } else {
-          if (this.option.type === 'day' || this.option.type === 'min') {
+          if (this.innerOption.type === 'day' || this.innerOption.type === 'min') {
             this.checked.oldtime = this.time
             this.showDay(this.time)
           } else {
@@ -785,11 +813,11 @@
         }
       },
       picked() {
-        if (this.option.type === 'day' || this.option.type === 'min') {
+        if (this.innerOption.type === 'day' || this.innerOption.type === 'min') {
           let ctime = this.checked.year + '-' + this.checked.month + '-' + this.checked.day + ' ' + this.checked.hour +
             ':' + this.checked.min
           this.checked.currentMoment = moment(ctime, 'YYYY-MM-DD HH:mm')
-          this.time = moment(this.checked.currentMoment).format(this.option.format)
+          this.time = moment(this.checked.currentMoment).format(this.innerOption.format)
         } else {
           this.time = JSON.stringify(this.selectedDays)
         }
@@ -798,7 +826,7 @@
       },
       dismiss(evt) {
         if (evt.target.className === 'datepicker-overlay') {
-          if (this.option.dismissible === undefined || this.option.dismissible) {
+          if (this.innerOption.dismissible === undefined || this.innerOption.dismissible) {
             this.showInfo.check = false
             this.$emit('cancel')
           }

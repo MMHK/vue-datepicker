@@ -5,28 +5,70 @@
     <title>Vue DatePicker Demo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script type="text/javascript" src="moment.min.js"></script>
     <script type="text/javascript" src="vue-datepicker.js"></script>
     <!--load google font-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="font.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
         }
         
-        main {
-            width: 500px;
-            margin: 0 auto;
-            padding-top: 25%;
+        ul {
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        li {
+            list-style: none;
+            vertical-align: middle;
+        }
+        
+        label {
+            line-height: 3em;
         }
     </style>
 </head>
 
 <body>
-    <main id="App">
-        <date-picker v-ref:picker :time.sync="starttime" :option="option" :limit="limit"></date-picker>
-        <button type="button" @click="$refs.picker.showCheck">Open Picker</button>
+    <main id="App" class="container">
+        <ul>
+            <li class="row docs-row">
+                <label class="col-xs-6">
+                    Default:
+                </label>
+                <div class="col-xs-6">
+                    <date-picker :time.sync="starttime" :time:sync="time1"></date-picker>
+                </div>
+            </li>
+            <li class="row docs-row">
+                <label class="col-xs-6">
+                    With Time:
+                </label>
+                <div class="col-xs-6">
+                    <date-picker :time.sync="starttime" :option="option.WithTime"></date-picker>
+                </div>
+            </li>
+            <li class="row docs-row">
+                <label class="col-xs-6">
+                    hiddenInput:
+                </label>
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" type="button" @click="$refs.picker.showCheck">Open Picker</button>
+                    <date-picker :time.sync="starttime" v-ref:picker :option="option.hiddenInput"></date-picker>
+                </div>
+            </li>
+            <li class="row docs-row">
+                <label class="col-xs-6">
+                    Limit range:
+                </label>
+                <div class="col-xs-6">
+                    <date-picker :time.sync="starttime" :limit="limit"></date-picker>
+                </div>
+            </li>
+        </ul>
     </main>
     <script>
         (function () {
@@ -37,35 +79,20 @@
                     return {
                         starttime: moment().format('YYYY-MM-DD'),
 
+
+
                         option: {
-                            hiddenInput: true,
-                            type: 'day',
-                            week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-                            month: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-                                'August', 'September', 'October', 'November', 'December'
-                            ],
-                            format: 'YYYY-MM-DD',
-                            placeholder: 'select a date',
-                            inputStyle: {
-                                'display': 'inline-block',
-                                'padding': '6px',
-                                'line-height': '22px',
-                                'font-size': '16px',
-                                'border': '2px solid #fff',
-                                'box-shadow': '0 1px 3px 0 rgba(0, 0, 0, 0.2)',
-                                'border-radius': '2px',
-                                'color': '#5F5F5F'
+                            Default: {
+                                type: 'day'
                             },
-                            color: {
-                                // header: '#FFFFFF',
-                                headerText: '#FFFFFF'
+                            WithTime: {
+                                type: 'min',
+                                format: 'YYYY-MM-DD HH:mm',
                             },
-                            buttons: {
-                                ok: 'Ok',
-                                cancel: 'Cancel'
+                            hiddenInput: {
+                                type: 'day',
+                                hiddenInput: true
                             },
-                            overlayOpacity: 0.5, // 0.5 as default
-                            dismissible: true // as true as default
                         },
 
                         limit: [{
