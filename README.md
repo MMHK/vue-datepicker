@@ -7,6 +7,7 @@ calendar and datepicker component with material design for Vue.js (MM 修改版)
 - 去掉一些字体样式
 - 增加demo示例
 - 增加 `option.hiddenInput` 配置，用于隐藏 input。方便其他UI组件调用。
+- 完善 `option`的合并，现在不需要填写完整的配置，只需要覆盖对应的option项即可。
 
 ## 注意
 
