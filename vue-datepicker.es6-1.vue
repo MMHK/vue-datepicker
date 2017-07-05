@@ -614,18 +614,6 @@
           }
           days.unshift(passiveDay)
         }
-        if (this.limit.length > 0) {
-          for (let li of this.limit) {
-            switch (li.type) {
-              case 'fromto':
-                days = this.limitFromTo(li, days)
-                break
-              case 'weekday':
-                days = this.limitWeekDay(li, days)
-                break
-            }
-          }
-        }
         var passiveDaysAtFinal = 42 - days.length
         for (let i = 1; i <= passiveDaysAtFinal; i++) {
           let passiveDay = {
@@ -638,6 +626,20 @@
           }
           days.push(passiveDay)
         }
+
+        if (this.limit.length > 0) {
+          for (let li of this.limit) {
+            switch (li.type) {
+              case 'fromto':
+                days = this.limitFromTo(li, days)
+                break
+              case 'weekday':
+                days = this.limitWeekDay(li, days)
+                break
+            }
+          }
+        }
+
         this.dayList = days
       },
       checkBySelectDays(d, days) {
@@ -667,7 +669,7 @@
         return days
       },
       getLimitCondition(limit, day) {
-        let tmpMoment = moment(this.checked.year + '-' + this.pad(this.checked.month) + '-' + this.pad(day.value))
+        let tmpMoment = day.moment
         if (limit.from && !limit.to) {
           return !tmpMoment.isAfter(limit.from)
         } else if (!limit.from && limit.to) {
