@@ -675,7 +675,7 @@
         } else if (!limit.from && limit.to) {
           return !tmpMoment.isBefore(limit.to)
         } else {
-          return !tmpMoment.isBetween(limit.from, limit.to)
+          return !tmpMoment.isBetween(limit.from, limit.to, null, '[]')
         }
       },
       checkDay(obj) {
