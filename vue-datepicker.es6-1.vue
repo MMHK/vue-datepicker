@@ -628,16 +628,16 @@
         }
 
         if (this.limit.length > 0) {
-          for (let li of this.limit) {
-            switch (li.type) {
-              case 'fromto':
-                days = this.limitFromTo(li, days)
-                break
-              case 'weekday':
-                days = this.limitWeekDay(li, days)
-                break
-            }
-          }
+          this.limit.forEach(li  => {
+              switch (li.type) {
+                case 'fromto':
+                  days = this.limitFromTo(li, days)
+                  break
+                case 'weekday':
+                  days = this.limitWeekDay(li, days)
+                  break
+              }
+          })
         }
 
         this.dayList = days

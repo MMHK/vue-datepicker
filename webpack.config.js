@@ -9,7 +9,7 @@ var ENV = optimist.argv.env || 'dev';
 
 module.exports = {
     entry: {
-        'vue-datepicker': ["babel-polyfill", path.join(__dirname, 'vue-datepicker.es6-1.vue')]
+        'vue-datepicker': [path.join(__dirname, 'vue-datepicker.es6-1.vue')]
     },
     output: {
         path: path.join(__dirname, 'dist'),
@@ -28,8 +28,8 @@ module.exports = {
         browsers: ['last 2 versions', '0.5%']
     })],
     babel: {
-        "presets": ["es2015"]
-        // plugins: ["transform-object-assign"]
+        "presets": ["es2015"],
+        plugins: ["transform-object-assign"]
     },
     plugins: [
         new webpack.DefinePlugin({
