@@ -9,7 +9,7 @@ var ENV = optimist.argv.env || 'dev';
 
 module.exports = {
     entry: {
-        'vue-datepicker': path.join(__dirname, 'vue-datepicker.es6-1.vue')
+        'vue-datepicker': ["babel-polyfill", path.join(__dirname, 'vue-datepicker.es6-1.vue')]
     },
     output: {
         path: path.join(__dirname, 'dist'),
@@ -29,6 +29,7 @@ module.exports = {
     })],
     babel: {
         "presets": ["es2015"]
+        // plugins: ["transform-object-assign"]
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -49,6 +50,7 @@ if (ENV === 'dev') {
     delete module.exports.postcss;
     module.exports.output.path = path.join(__dirname, 'docs');
 } else {
+    module.exports.devtool = 'source-map';
     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: true
     }));

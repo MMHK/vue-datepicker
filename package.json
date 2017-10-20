@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/hilongjw/vue-datepicker#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "moment": "^2.11.1"
   },
   "devDependencies": {
