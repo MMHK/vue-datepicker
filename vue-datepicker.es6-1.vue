@@ -99,6 +99,7 @@
     text-align: start!important;
     line-height: 1em;
     max-height: 20em;
+    -webkit-overflow-scrolling: touch;
   }
   
   .cov-picker-box.list-box {
