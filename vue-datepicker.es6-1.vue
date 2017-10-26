@@ -98,8 +98,11 @@
     max-width: 100%;
     text-align: start!important;
     line-height: 1em;
+    height: 20em;
     max-height: 20em;
     -webkit-overflow-scrolling: touch;
+    overflow:scroll;
+    z-index:1;
   }
   
   .cov-picker-box.list-box {
