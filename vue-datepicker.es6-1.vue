@@ -67,9 +67,12 @@
     }
   }
   
+  .cov-date-box {
+    background:#ffffff;
+  }
+  
   .cov-date-body {
     display: inline-block;
-    background: #3F51B5;
     overflow: hidden;
     position: relative;
     position: fixed;
@@ -207,14 +210,20 @@
   
   .cov-date-caption {
     width: 60%;
-    padding: 0.5em 0!important;
+    
     box-sizing: border-box;
     font-size: 1.5em;
     line-height: 1;
   }
   
-  .cov-date-caption small {
-    font-size: 80%;
+  .cov-date-caption span {
+    margin-right: 1em;
+  }
+  .cov-date-caption span:last-child {
+    margin-right: 0;
+  }
+  .cov-date-monthly .cov-date-caption {
+    margin: 1em auto;
   }
   
   .cov-date-caption span:hover {
@@ -288,9 +297,10 @@
   
   .date-item {
     text-align: center;
-    padding: 0.5em 0;
+    padding: 0.25em 0;
+    margin: 0.25em 0;
     cursor: pointer;
-    font-size: 2em;
+    font-size: 1.5em;
   }
   
   .date-item:hover, .date-item:focus {
@@ -384,8 +394,7 @@
         <div class="cov-date-monthly">
           <div class="cov-date-previous" @click="nextMonth('pre')">«</div>
           <div class="cov-date-caption" :style="{'color': innerOption.color ? innerOption.color.headerText : '#fff'}">
-            <span @click="showYear"><small>{{checked.year}}</small></span>
-            <br>
+            <span @click="showYear">{{checked.year}}</span> 
             <span @click="showMonth">{{displayInfo.month}}</span>
           </div>
           <div class="cov-date-next" @click="nextMonth('next')">»</div>
