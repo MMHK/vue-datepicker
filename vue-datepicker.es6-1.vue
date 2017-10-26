@@ -213,6 +213,10 @@
     line-height: 1;
   }
   
+  .cov-date-caption small {
+    font-size: 80%;
+  }
+  
   .cov-date-caption span:hover {
     color: rgba(255, 255, 255, 0.7);
   }
@@ -286,9 +290,10 @@
     text-align: center;
     padding: 0.5em 0;
     cursor: pointer;
+    font-size: 2em;
   }
   
-  .date-item:hover {
+  .date-item:hover, .date-item:focus {
     background: #e0e0e0;
   }
   
